@@ -55,8 +55,8 @@
                 </thead>
                 <tbody>
                     <tr
-                    v-for="item in posts"
-                    :key="item.name"
+                    v-for="(item, index) in posts"
+                    :key=index
                     class="postsItem"
                     @click="showDetailPostitem(item)"
                     >

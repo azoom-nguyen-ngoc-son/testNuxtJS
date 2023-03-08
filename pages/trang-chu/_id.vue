@@ -55,7 +55,8 @@
         <v-card
             class="mx-auto my-6"
             max-width="700"
-            v-for="item in this.postItem.comments"
+            v-for="(item, index) in this.postItem.comments"
+            :key=index
         >
             <v-list-item-avatar color="mr-2  ml-4 mb-0 grey darken-2">
                 <v-img
