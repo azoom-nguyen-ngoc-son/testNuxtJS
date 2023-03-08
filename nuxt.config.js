@@ -2,6 +2,7 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  ssr: false,
   head: {
     titleTemplate: '%s - project_nuxtjs',
     title: 'project_nuxtjs',
@@ -27,7 +28,7 @@ export default {
   plugins: [
     {
       src: '~/plugins/vuelidate.js',
-      mode: 'both',
+      mode: 'all',
     },
     '~/store/index.js',
   ],
@@ -66,5 +67,14 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+  firebase: {
+      apiKey: "AIzaSyCxNDXjgp4LiCjeZk5CgXzb0HkX9C0byO4",
+      authDomain: "nuxtapi-186a0.firebaseapp.com",
+      projectId: "nuxtapi-186a0",
+      storageBucket: "nuxtapi-186a0.appspot.com",
+      messagingSenderId: "588558381262",
+      appId: "1:588558381262:web:a6f5636bdf00f170f6e09f",
+      measurementId: "G-C08Z28Q0E4"
   }
 }

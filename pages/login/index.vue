@@ -109,6 +109,7 @@ import baseLoading from '../../components/baseLoading.vue'
             },
         created() {
             this.$store.commit("manager/disableLayout");
+            this.$store.dispatch("manager/getUsers")
         },
         methods: {
                 // loginUser:  call('manager/addUsers  ')
@@ -120,8 +121,7 @@ import baseLoading from '../../components/baseLoading.vue'
                     email: this.email,
                     password: this.password,
                 }
-                const result = JSON.parse(localStorage.getItem("users"))
-                    .filter(item => 
+                const result = JSON.parse(localStorage.getItem("users"))?.filter(item => 
                         item.email === user.email 
                         && item.password === user.password)
                 if(result && result.length > 0) {

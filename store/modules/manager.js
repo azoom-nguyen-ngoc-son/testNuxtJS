@@ -35,7 +35,8 @@ const mutations = {
   
 }
 const api = ky.create({
-    prefixUrl: 'https://jsonplaceholder.typicode.com/' || "",
+    prefixUrl: 'https://nuxtapi-186a0-default-rtdb.asia-southeast1.firebasedatabase.app/' || "",
+    
     timeout: 30000,
   })
 const actions = {
@@ -43,7 +44,9 @@ const actions = {
   async getUsers() {
     try {
       console.log("sss")
-      const res = await api.get("users").json()
+      const res = await api.get("").json()
+      // const res = await ky.get("https://nuxtapi-186a0-default-rtdb.asia-southeast1.firebasedatabase.app/")
+      console.log("res data", res)
       return res 
     }
     catch(e) {
