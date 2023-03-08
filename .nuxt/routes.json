@@ -1,0 +1,44 @@
+[
+  {
+    "name": "inspire",
+    "path": "/inspire",
+    "component": "/Users/nguyenngocson/Documents/nuxtjs2/pages/inspire.vue",
+    "chunkName": "pages/inspire",
+    "_name": "_6a1a5f97"
+  },
+  {
+    "name": "login",
+    "path": "/login",
+    "component": "/Users/nguyenngocson/Documents/nuxtjs2/pages/login/index.vue",
+    "chunkName": "pages/login/index",
+    "_name": "_0bd383e9"
+  },
+  {
+    "name": "register",
+    "path": "/register",
+    "component": "/Users/nguyenngocson/Documents/nuxtjs2/pages/register/index.vue",
+    "chunkName": "pages/register/index",
+    "_name": "_5230cb39"
+  },
+  {
+    "name": "trang-chu",
+    "path": "/trang-chu",
+    "component": "/Users/nguyenngocson/Documents/nuxtjs2/pages/trang-chu/index.vue",
+    "chunkName": "pages/trang-chu/index",
+    "_name": "_3fbc307f"
+  },
+  {
+    "name": "trang-chu-id",
+    "path": "/trang-chu/:id?",
+    "component": "/Users/nguyenngocson/Documents/nuxtjs2/pages/trang-chu/_id.vue",
+    "chunkName": "pages/trang-chu/_id",
+    "_name": "_394a46a7"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/nguyenngocson/Documents/nuxtjs2/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_edaa4262"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "NuxtLogo": {
+    "description": "Auto imported from components/NuxtLogo.vue"
+  },
+  "Tutorial": {
+    "description": "Auto imported from components/Tutorial.vue"
+  },
+  "VuetifyLogo": {
+    "description": "Auto imported from components/VuetifyLogo.vue"
+  },
+  "BaseLoading": {
+    "description": "Auto imported from components/baseLoading.vue"
+  },
+  "CardItem": {
+    "description": "Auto imported from components/cardItem.vue"
+  }
+}
