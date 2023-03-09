@@ -11,7 +11,6 @@
                         dark
                         v-bind="attrs"
                         v-on="on"
-                        @click="menuLL()"
                         >
                         Menu
                         </v-btn>
@@ -48,6 +47,7 @@
                <v-text-field
                   v-model="infoUser.name"
                   label="Name"
+                  :rules="nameRules"
                   required
                ></v-text-field>
                <v-text-field
@@ -141,7 +141,7 @@ export default {
   name: 'DefaultLayout',
     data() {
       return {
-         infoUser: [],
+        //  infoUser: {},
          dialog: false,
          name: "name",
          email: "email",
@@ -149,6 +149,9 @@ export default {
          menu: false,
          activePicker: null,
          gender: "",
+         nameRules: [
+          v => !!v || 'Name is required',
+        ],
          emailRules: [
           v => !!v || 'E-mail is required',
           v => /.+@.+/.test(v) || 'E-mail must be valid',
@@ -163,8 +166,8 @@ export default {
       }
     }, 
     components: {
-            baseLoading,
-        },
+      baseLoading,
+    },
     created() {
         this.getData()
     },
@@ -174,18 +177,12 @@ export default {
       },
    },
     computed:  {
-      active: sync('manager/active')
+      active: sync('manager/active'),
+      infoUser: sync('manager/loginUser')
     }, 
     methods: {
-      menuLL(){
-        console.log("dddd", this.infoUser)
-      },
       async getData(){
-        let a = {}
-        if( await JSON.parse(localStorage.getItem("loginUser")) !==null) {
-          a = JSON.parse(localStorage.getItem("loginUser"))
-        }
-        this.infoUser = a
+        // this.infoUser = await JSON.parse(localStorage.getItem("loginUser"))
       },
       changeInfo() {
         this.dialog= true
@@ -200,7 +197,6 @@ export default {
       },
       logOut() {
           this.$router.push("/login")
-    
       }
     }
   }

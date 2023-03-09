@@ -4,7 +4,8 @@ import ky from 'Ky'
 function state () {
   return {
     active: false,
-    posts: []
+    posts: [],
+    loginUser: {}
   }
 }
 
@@ -18,6 +19,10 @@ const mutations = {
   },
   disableLayout(state) {
     state.active = false
+  },
+  getLoginUser(state) {
+    state.loginUser = JSON.parse(localStorage.getItem("loginUser"))
+    console.log("a" , state.loginUser)
   }
 
   
@@ -35,18 +40,14 @@ const mutations = {
   
 }
 const api = ky.create({
-    prefixUrl: 'https://nuxtapi-186a0-default-rtdb.asia-southeast1.firebasedatabase.app/' || "",
-    
+    prefixUrl: 'https://jsonplaceholder.typicode.com/' || "",
     timeout: 30000,
   })
 const actions = {
   
   async getUsers() {
     try {
-      console.log("sss")
-      const res = await api.get("").json()
-      // const res = await ky.get("https://nuxtapi-186a0-default-rtdb.asia-southeast1.firebasedatabase.app/")
-      console.log("res data", res)
+      const res = await api.get("users").json()
       return res 
     }
     catch(e) {
@@ -68,7 +69,6 @@ const actions = {
     try {
       const res = await api.get("posts").json()
       localStorage.setItem("posts", JSON.stringify(res))
-      console.log("res", res)
       return res 
     }
     catch(e) {
@@ -90,6 +90,14 @@ const actions = {
       const res = await api.get("comments").json()
       localStorage.setItem("comments", JSON.stringify(res))
       return res 
+    }
+    catch(e) {
+    }
+  },
+  async getLoginUser() {
+    try {
+      const res = await api.get("loginUser").json()
+      console.log("user", res)
     }
     catch(e) {
     }

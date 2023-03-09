@@ -104,24 +104,31 @@
                             :items="authors"
                             label="Choose author"
                             solo
+                            @blur="$v.author.$touch()"
                         ></v-select>
+                        <p 
+                            v-if="!$v.author.required && $v.author.$dirty" 
+                            class="text-danger">
+                            Author is required!
+                        </p>
                         <v-text-field
                             v-model="title"
-                            :counter="10"
                             label="Title"
-                            required
                         ></v-text-field>
-                        <v-text-field
+                        <!-- <v-text-field
                             v-model="body"
-                            :counter="10"
-                            label="Body"
-                            required
-                        ></v-text-field>
+                            label="Content"
+                        ></v-text-field> -->
+                        <v-textarea 
+                            label="Content"
+                            v-model="body"
+                        ></v-textarea>
                         <v-btn
                             depressed
                             color="primary"
                             class="mt-4 center"
                             @click="savePost()"
+                            :disabled="$v.$invalid"
                             >
                                 SAVE
                         </v-btn>
@@ -136,8 +143,7 @@
 <script>
 import { commit, dispatch, sync  } from 'vuex-pathify';
 import baseLoading from '../../components/baseLoading.vue'
-
-import ky from 'Ky'
+import { required } from "vuelidate/lib/validators";
     export default {
         data(){
             return{
@@ -175,8 +181,18 @@ import ky from 'Ky'
                 ],
                 input_search: null,
                 isLoading: false
-
             }
+        },
+        validations: {
+            author: {
+                required
+            }, 
+            // title: {
+            //     required
+            // },
+            // body: {
+            //     required
+            // }
         },
         components: {
             baseLoading,
@@ -218,7 +234,6 @@ import ky from 'Ky'
             changePagination(){
                 this.isLoading = true
                 this.posts = []
-                console.log("a", this.data)
                 if(this.data.length === 0) {
                     this.defaultNumberRows = 5
                     this.page = 1
@@ -238,7 +253,6 @@ import ky from 'Ky'
                         (this.page - 1 ) * this.defaultNumberRows,
                         (this.page ) * this.defaultNumberRows
                     )
-                    console.log("this.post", this.post)
                     this.lengthPagination = Math.ceil( this.data.length / this.defaultNumberRows )
                 }
                 setTimeout(() => {
@@ -274,7 +288,6 @@ import ky from 'Ky'
                 const newPost=  JSON.parse(localStorage.getItem("newPost"))
                 if(newPost !==null){
                     this.data = newPost.concat(this.data)
-                    console.log("ddssssđ", this.data)
                 }
                 for(let i = 0; i < 5; i++) {
                     this.posts.push(this.data[i])
@@ -290,6 +303,9 @@ import ky from 'Ky'
             },
             addPost() {
                 this.dialog = true
+                this.title = ''
+                this.author = ""
+                this.body = ''
                 localStorage.setItem("allData", JSON.stringify(this.data))
             },
             async savePost(){
@@ -302,9 +318,9 @@ import ky from 'Ky'
                     author: this.author
                 }
 
-                if(this.title === '' || this.body === '') {
-                    alert("Chưa nhập đủ thông tin nè!!!")
-                }
+                // if(this.title === '' || this.body === '') {
+                //     alert("Chưa nhập đủ thông tin nè!!!")
+                // }
                 // console.log("data", this.data)
                 
                 this.data.unshift(post)
@@ -322,15 +338,16 @@ import ky from 'Ky'
                     this.isLoading = false
                 }, 7000);
                 this.changePagination()
-
             }
-
-
         }
     }
 </script>
 
 <style lang="scss" scoped>
+.text-danger{
+    color: red;
+    font-size: 12px;
+}
 .input-numberRows{
     width: 100px;
 }

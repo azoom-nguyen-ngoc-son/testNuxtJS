@@ -21,7 +21,7 @@
             <v-card-title class="text-h5 pt-0">
               {{ postItem.title }}
             </v-card-title>
-            <v-card-subtitle>
+            <v-card-subtitle class="overflowCustom">
                 {{ postItem.body }}
             </v-card-subtitle>
             <v-card-text>
@@ -80,12 +80,18 @@
                     <v-card-title class="text-h5 grey lighten-2">
                     Comment
                     </v-card-title>
-                    <v-text-field
+                    <!-- <v-text-field
                         v-model="contentComment"
                         label="Content Comment"
                         required
                         class="inputComment"
-                    ></v-text-field>
+                    ></v-text-field> -->
+                    <v-textarea 
+                        label="Content Comment"
+                        class="inputComment"
+                        required
+                        v-model="contentComment"
+                     ></v-textarea>
                     <v-divider></v-divider>
                     <v-card-actions>
                     <v-spacer></v-spacer>
@@ -140,7 +146,6 @@ import baseLoading from '../../components/baseLoading.vue'
                 }
                 this.posts = JSON.parse(localStorage.getItem("allData"))
                 this.postItem = this.posts.filter((x) => x.id == this.$route.params.id)[0] || posts[0]
-                console.log("postItem", this.comments)
                
                 for(let j = 0; j < this.comments.length; j++ ) {
                     if(this.comments[j].postId === this.postItem.id){
@@ -165,7 +170,6 @@ import baseLoading from '../../components/baseLoading.vue'
                     author: this.postItem.author,
                     comments : this.commentsPost
                 }
-                console.log("cmt", this.postItem )
             },
             addComments() {
                 this.dialog = true     
@@ -199,7 +203,6 @@ import baseLoading from '../../components/baseLoading.vue'
                         this.isLoading = false
                     }, 200);  
                 }
-                console.log("ddd", this.contentComment)
                 if(!JSON.parse(localStorage.getItem("localComments")) && this.contentComment !== "") {
                     localStorage.setItem("localComments", JSON.stringify([comment]))
                 }
@@ -216,6 +219,9 @@ import baseLoading from '../../components/baseLoading.vue'
 </script>
 
 <style lang="scss" scoped>
+a {
+    text-decoration: none;
+}
 .red{ 
     background-color: red;
 }

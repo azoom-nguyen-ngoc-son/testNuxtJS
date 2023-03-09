@@ -79,7 +79,7 @@
                 <p 
                     v-if="(!$v.password.specialCharacters || !$v.password.minLength) && $v.password.$dirty" 
                     class="text-danger">
-                    Password must be 8 chacraters and include number, special characters
+                    Password must be 8 chacraters and includes special characters
                 </p>
             </div>
             <v-text-field
@@ -207,9 +207,8 @@ export default {
         },
     computed: {
       // wildcards can be problematic as state needs to exist before creating
-      active : get('manager'),
-      ...sync('manager/*')
-
+    //   active : get('manager'),
+    //   ...sync('manager/*')
     },
     validations: {
         name: {
@@ -245,12 +244,11 @@ export default {
     save (date) {
         this.$refs.menu.save(date)
       },
-    callApi: call('manager/getUsers'),
+    // callApi: call('manager/getUsers'),
     async registerUser() {
         this.$v.$touch();
         this.isLoading = true
         const users = await this.$store.dispatch("manager/getUsers")
-        const posts = await this.$store.dispatch("manager/getPosts")
         const infoUser = {
             id: users.length + 1,
             name: this.name,
@@ -261,15 +259,12 @@ export default {
             gender: this.gender,
         }
         users.push(infoUser)
-        localStorage.setItem("users", JSON.stringify(users))
-        localStorage.setItem("posts", JSON.stringify(posts))
-        if(!this.$v.$invalid ) {
-            await this.$store.dispatch("manager/getPosts")
-            await localStorage.setItem("loginUser", JSON.stringify(infoUser))
-            this.$router.push("/trang-chu")
-            this.loading = false
-            // alert("Đăng kí thành công")
-        }
+         await localStorage.setItem("users", JSON.stringify(users))
+         await localStorage.setItem("loginUser", JSON.stringify(infoUser))
+         await this.$store.dispatch("manager/getPosts")
+         this.$store.commit("manager/getLoginUser")
+         this.loading = false
+         this.$router.push("/trang-chu")
         
     },
   }
