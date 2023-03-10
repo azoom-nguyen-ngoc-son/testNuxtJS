@@ -1,8 +1,5 @@
-export { default as NuxtLogo } from '../../components/NuxtLogo.vue'
-export { default as Tutorial } from '../../components/Tutorial.vue'
-export { default as VuetifyLogo } from '../../components/VuetifyLogo.vue'
-export { default as BaseLoading } from '../../components/baseLoading.vue'
-export { default as CardItem } from '../../components/cardItem.vue'
+export { default as BaseLoading } from '../../components/base-loading.vue'
+export { default as CardItem } from '../../components/card-item.vue'
 
 // nuxt/nuxt.js#8607
 function wrapFunctional(options) {

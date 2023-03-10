@@ -18,6 +18,15 @@
 
 <script>
     export default {
+        created(){
+            this.getData()
+        },
+        methods: {
+            getData(){
+            this.$store.dispatch("manager/getUsers")
+            console.log(123)
+            }
+        }
     }
 </script>
 

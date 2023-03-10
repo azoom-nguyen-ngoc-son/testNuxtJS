@@ -13,7 +13,7 @@
         default: false
       }
     },
-    name: "baseLoading",
+    name: "BFbaFaseLoading",
     methods: {
       start() {
         this.loading = true

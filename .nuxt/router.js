@@ -4,12 +4,12 @@ import { normalizeURL, decode } from 'ufo'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _6a1a5f97 = () => interopDefault(import('../pages/inspire.vue' /* webpackChunkName: "pages/inspire" */))
-const _0bd383e9 = () => interopDefault(import('../pages/login/index.vue' /* webpackChunkName: "pages/login/index" */))
-const _5230cb39 = () => interopDefault(import('../pages/register/index.vue' /* webpackChunkName: "pages/register/index" */))
-const _3fbc307f = () => interopDefault(import('../pages/trang-chu/index.vue' /* webpackChunkName: "pages/trang-chu/index" */))
-const _394a46a7 = () => interopDefault(import('../pages/trang-chu/_id.vue' /* webpackChunkName: "pages/trang-chu/_id" */))
-const _edaa4262 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
+const _2ac80a5d = () => interopDefault(import('../pages/inspire.vue' /* webpackChunkName: "pages/inspire" */))
+const _14825baf = () => interopDefault(import('../pages/login/index.vue' /* webpackChunkName: "pages/login/index" */))
+const _764ed49a = () => interopDefault(import('../pages/register/index.vue' /* webpackChunkName: "pages/register/index" */))
+const _220db545 = () => interopDefault(import('../pages/trang-chu/index.vue' /* webpackChunkName: "pages/trang-chu/index" */))
+const _5cbb7626 = () => interopDefault(import('../pages/trang-chu/_id.vue' /* webpackChunkName: "pages/trang-chu/_id" */))
+const _14b08315 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
 
@@ -24,27 +24,27 @@ export const routerOptions = {
 
   routes: [{
     path: "/inspire",
-    component: _6a1a5f97,
+    component: _2ac80a5d,
     name: "inspire"
   }, {
     path: "/login",
-    component: _0bd383e9,
+    component: _14825baf,
     name: "login"
   }, {
     path: "/register",
-    component: _5230cb39,
+    component: _764ed49a,
     name: "register"
   }, {
     path: "/trang-chu",
-    component: _3fbc307f,
+    component: _220db545,
     name: "trang-chu"
   }, {
     path: "/trang-chu/:id?",
-    component: _394a46a7,
+    component: _5cbb7626,
     name: "trang-chu-id"
   }, {
     path: "/",
-    component: _edaa4262,
+    component: _14b08315,
     name: "index"
   }],
 

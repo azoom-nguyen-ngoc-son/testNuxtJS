@@ -129,13 +129,13 @@
         <Nuxt />
       </v-container>
     </v-main>
-    <baseLoading :loading="isLoading"/>
+    <BaseLoading :loading="isLoading"/>
   </v-app>
 </template>
 
 <script>
 import { get, sync } from 'vuex-pathify'
-import baseLoading from '../components/baseLoading.vue'
+import BaseLoading from '../components/base-loading.vue'
 
 export default {
   name: 'DefaultLayout',
@@ -166,7 +166,7 @@ export default {
       }
     }, 
     components: {
-      baseLoading,
+      BaseLoading,
     },
     created() {
         this.getData()

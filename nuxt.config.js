@@ -44,6 +44,23 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    [
+      '@nuxtjs/firebase',
+    {
+      config: {
+        apiKey: "AIzaSyC6Bq5UVcaWxHt80e3JuHTTiLg_yRBOUxg",
+        authDomain: "nuxtapp-d9d72.firebaseapp.com",
+        projectId: "nuxtapp-d9d72",
+        storageBucket: "nuxtapp-d9d72.appspot.com",
+        messagingSenderId: "869990147051",
+        appId: "1:869990147051:web:e509ef2f8982466cc56fae",
+        measurementId: "G-GBHY5XHN9M"
+      },
+      services: {
+        firestore: true
+      }
+    }
+    ]
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

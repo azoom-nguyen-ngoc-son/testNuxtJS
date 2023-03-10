@@ -45,21 +45,25 @@ const api = ky.create({
   })
 const actions = {
   
-  async getUsers() {
+   async getUsers() {
     try {
-      const res = await api.get("users").json()
-      return res 
+      // const res = await api.get("users").json()
+      const data = await this.$fire.firestore.collection("users").get()
+      let users = data.docs.map((post) => ({
+        id: post.id,
+        ...post.data(),
+      }))
+      return users 
     }
     catch(e) {
+      console.log("ddss")
     }
   },
-  async addUsers () {
-    const user = {
-      id: 11111,
-      name: "abcd"
-    }
+  async addUsers (context, payload) {
     try {
       await api.post("users",JSON.stringify(user))
+      console.log("payload", payload)
+      await this.$fire.firestore.collection("users").add(payload);
       return res 
     }
     catch(e) {
@@ -67,9 +71,14 @@ const actions = {
   },
   async getPosts() {
     try {
-      const res = await api.get("posts").json()
-      localStorage.setItem("posts", JSON.stringify(res))
-      return res 
+      // const res = await api.get("posts").json()
+      // localStorage.setItem("posts", JSON.stringify(res))
+      const data = await this.$fire.firestore.collection("posts").get()
+      let posts = data.docs.map((post) => ({
+        id: post.id,
+        ...post.data(),
+      }))
+      return posts
     }
     catch(e) {
     }
