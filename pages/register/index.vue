@@ -274,7 +274,6 @@ export default {
       this.$store.commit("manager/getLoginUser")
       this.loading = false
       this.$router.push("/trang-chu")
-
     },
   }
 };

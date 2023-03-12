@@ -12,7 +12,7 @@
           class="mt-4 input-numberRows"
         ></v-select>
         <template>
-          Toltal: {{ data.length }}
+          Toltal: {{ dataPosts.length }}
         </template>
       </div>
       <v-btn 
@@ -24,7 +24,6 @@
         Add new Post
       </v-btn>
     </div>
-
     <div>
       <v-text-field 
         label="Search" 
@@ -53,7 +52,7 @@
             </thead>
             <tbody>
               <tr 
-                v-for="(item, index) in data" 
+                v-for="(item, index) in posts" 
                 :key=index class="postsItem" 
                 @click="showDetailPostitem(item)">
                 <td> {{ item.id }} </td>
@@ -64,8 +63,8 @@
           </template>
         </v-simple-table>
       </div>
-
     </div>
+    <hr>
     <div class="text-center">
       <v-container>
         <v-row justify="center">
@@ -88,8 +87,8 @@
             <v-card-title class="text-h5 grey lighten-2">
               Add new Post
             </v-card-title>
-            <v-select 
-              v-model="author" 
+            <!-- <v-select 
+              v-model="author"
               class="mt-4" 
               :items="authors" 
               label="Choose author" 
@@ -100,15 +99,13 @@
               v-if="!$v.author.required && $v.author.$dirty" 
               class="text-danger">
               Author is required!
-            </p>
+            </p> -->
             <v-text-field 
               v-model="title" 
               label="Title"
+              class="mt-4"
+              >
             ></v-text-field>
-            <!-- <v-text-field
-                            v-model="body"
-                            label="Content"
-                        ></v-text-field> -->
             <v-textarea 
               label="Content" 
               v-model="body"
@@ -118,7 +115,6 @@
               color="primary" 
               class="mt-4 center" 
               @click="savePost()" 
-              :disabled="$v.$invalid"
             >
               SAVE
             </v-btn>
@@ -133,7 +129,6 @@
 <script>
 import { commit, dispatch, sync } from 'vuex-pathify';
 import BaseLoading from '../../components/base-loading.vue'
-import { required } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
@@ -143,26 +138,11 @@ export default {
       numberRows: [
         5, 10, 15, 20
       ],
-      data: [],
+      dataPosts: [],
       lengthPagination: null,
       dialog: false,
       title: '',
       body: '',
-      author: "",
-      authors: [
-        "Ronaldo",
-        "Messi",
-        "Mbappe",
-        "Ramos",
-        "Modric",
-        "Kroos",
-        "Neymar",
-        "Saka",
-        "Lukaku",
-        "Dybala",
-        "Isco",
-        "Marcelo",
-      ],
       users: '',
       dataTable: [],
       rules: [
@@ -172,17 +152,6 @@ export default {
       input_search: null,
       isLoading: false
     }
-  },
-  validations: {
-    author: {
-      required
-    },
-    // title: {
-    //     required
-    // },
-    // body: {
-    //     required
-    // }
   },
   components: {
     BaseLoading,
@@ -200,74 +169,66 @@ export default {
   },
   computed: {
     active: sync('manager/active'),
-    dataPosts: sync('manager/posts')
   },
   created() {
     this.getLayout()
     this.getDataPost()
-    // console.log("dd")
   },
   methods: {
-    // delPost(val) {
-    //     console.log("Ad");
-    //     this.data = this.data.filter(x => x.id !== val.id) 
-    //     localStorage.setItem("allData", JSON.stringify(this.data))
-    //     this.changePagination
-    // },
     search() {
-      this.data = JSON.parse(localStorage.getItem("allData"))
-      this.data = this.data.filter(x =>
+      this.dataPosts = JSON.parse(localStorage.getItem("dataPosts"))
+      this.dataPosts = this.dataPosts.filter(x =>
         x.author.toLowerCase()
           .startsWith(this.input_search.toLowerCase()))
-
+      console.log("this.dataPost", this.data)
       this.changePagination()
     },
     changePagination() {
       this.isLoading = true
-      console.log("Data", this.data)
       this.posts = []
-      if (this.data.length === 0) {
+      if (this.dataPosts.length === 0) {
         this.defaultNumberRows = 5
         this.page = 1
       }
       else {
-        if (this.page > Math.floor(this.data.length / this.defaultNumberRows)
-          && this.data.length % this.defaultNumberRows !== 0) {
-          this.page = Math.floor(this.data.length / this.defaultNumberRows) + 1
+        console.log("this.dataPost", this.dataPosts.length)
+        if (this.page > Math.floor(this.dataPosts.length / this.defaultNumberRows)
+          && this.dataPosts.length % this.defaultNumberRows !== 0) 
+        {
+          this.page = Math.floor(this.dataPosts.length / this.defaultNumberRows) + 1
         }
         if (
-          this.page > Math.floor(this.data.length / this.defaultNumberRows)
-          && this.data.length % this.defaultNumberRows === 0) {
-          this.page = Math.floor(this.data.length / this.defaultNumberRows)
+          this.page > Math.floor(this.dataPosts.length / this.defaultNumberRows)
+          && this.dataPosts.length % this.defaultNumberRows === 0) 
+        {
+          this.page = Math.floor(this.dataPosts.length / this.defaultNumberRows)
 
         }
-        this.posts = this.data.slice(
+        this.posts = this.dataPosts.slice(
           (this.page - 1) * this.defaultNumberRows,
           (this.page) * this.defaultNumberRows
         )
-        this.lengthPagination = Math.ceil(this.data.length / this.defaultNumberRows)
+        console.log("this.posts", this.posts)
+        this.lengthPagination = Math.ceil(this.posts.length / this.defaultNumberRows)
       }
       setTimeout(() => {
         this.isLoading = false
       }, 200);
     },
     async getDataPost() {
+      this.isLoading = true
       let id = ''
       let author = ''
       let title = ''
       let body = ''
-      // const posts = await JSON.parse(localStorage.getItem("posts"))
       const posts = await this.$store.dispatch("manager/getPosts")
       const users = await this.$store.dispatch("manager/getUsers")
-      console.log(1, posts)
-      console.log(2, users)
       for (let k = 0; k < posts.length; k++) {
         id = posts[k].id
         title = posts[k].title
         body = posts[k].body
-        console.log("postsID", posts[k].id)
         for (let j = 0; j < users.length; j++) {
-          if (posts[k].userId === 1) {
+          if (posts[k].userId === users[j].id) {
             author = users[j].name
             const item = {
               id: id,
@@ -275,21 +236,18 @@ export default {
               body: body,
               author: author
             }
-            this.data.push(item)
+            this.dataPosts.push(item)
             continue;
           }
         }
       }
-      console.log("dataTrangchu", this.data)
-      // const newPost=  JSON.parse(localStorage.getItem("newPost"))
-      // if(newPost !==null){
-      //     this.data = newPost.concat(this.data)
-      // }
-      // for(let i = 0; i < 5; i++) {
-      //     this.posts.push(this.data[i])
-      // }
-      // localStorage.setItem("allData", JSON.stringify(this.data))
-      this.lengthPagination = Math.ceil(this.data.length / 5)
+      for(let i = 0; i < 5; i++) {
+          this.posts.push(this.dataPosts[i])
+      }
+      console.log("this.post", this.posts)
+      localStorage.setItem("dataPosts", JSON.stringify(this.dataPosts))
+      this.lengthPagination = Math.ceil(this.dataPosts.length / 5)
+      this.isLoading = false
     },
     getLayout() {
       this.$store.commit("manager/getLayout");
@@ -302,37 +260,27 @@ export default {
       this.title = ''
       this.author = ""
       this.body = ''
-      localStorage.setItem("allData", JSON.stringify(this.data))
     },
     async savePost() {
       this.dialog = false
       this.isLoading = true
+      const loginUser = JSON.parse(localStorage.getItem("loginUser"))
       const post = {
-        id: this.data.length + 1,
+        id: this.dataPosts.length + 1,
         title: this.title,
         body: this.body,
-        author: this.author
+        userId: loginUser.id
       }
-
-      // if(this.title === '' || this.body === '') {
-      //     alert("Chưa nhập đủ thông tin nè!!!")
-      // }
-      // console.log("data", this.data)
-
-      this.data.unshift(post)
-      // console.log("data", this.data)
-      if (JSON.parse(localStorage.getItem("newPost")) === null) {
-        localStorage.setItem("newPost", JSON.stringify([post]))
+      const dataPost= {
+        id: this.dataPosts.length + 1,
+        title: this.title,
+        body: this.body,
+        author: loginUser.name
       }
-      else {
-        let newPost = JSON.parse(localStorage.getItem("newPost"))
-        newPost.push(post)
-        localStorage.setItem("newPost", JSON.stringify(newPost))
-      }
-      localStorage.setItem("allData", JSON.stringify(this.data))
-      setTimeout(() => {
-        this.isLoading = false
-      }, 7000);
+      this.dataPosts.unshift(dataPost)
+      localStorage.setItem("dataPosts", JSON.stringify(this.dataPosts))
+      this.$store.dispatch("manager/addPosts", post)
+      this.isLoading = false
       this.changePagination()
     }
   }

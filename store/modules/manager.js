@@ -1,5 +1,4 @@
 import { make } from 'vuex-pathify'
-import { useApi } from '../../plugins/api'
 import ky from 'Ky'
 function state () {
   return {
@@ -44,8 +43,7 @@ const api = ky.create({
     timeout: 30000,
   })
 const actions = {
-  
-   async getUsers() {
+  async getUsers() {
     try {
       // const res = await api.get("users").json()
       const data = await this.$fire.firestore.collection("users").get()
@@ -56,15 +54,13 @@ const actions = {
       return users 
     }
     catch(e) {
-      console.log("ddss")
     }
   },
   async addUsers (context, payload) {
     try {
-      await api.post("users",JSON.stringify(user))
-      console.log("payload", payload)
+      // await api.post("users",JSON.stringify(user))
       await this.$fire.firestore.collection("users").add(payload);
-      return res 
+      // return res 
     }
     catch(e) {
     }
@@ -83,12 +79,11 @@ const actions = {
     catch(e) {
     }
   },
-  async addPosts() {
+  async addPosts(context, payload) {
     try {
       // const res = await api.get("posts").json()
-      localStorage.setItem("allData", JSON.stringify())
-      const res = await api.post("posts", JSON.stringify())
-      return res 
+      const data = await this.$fire.firestore.collection("posts").add(payload)
+      return data 
     }
     catch(e) {
     }

@@ -117,25 +117,18 @@ export default {
     this.$store.commit("manager/disableLayout");
   },
   methods: {
-    // loginUser:  call('manager/addUsers  ')
     async loginUser() {
-      // const dataLocal = JSON.parse(localStorage.getItem("users"))
       this.$v.$touch()
       this.isLoading = true
-      const user = {
-        email: this.email,
-        password: this.password,
-      }
-      // const result = await JSON.parse(localStorage.getItem("users"))
-      const result = this.$store.dispatch("manager/getUsers")
-        .filter(item =>
-          item.email === user.email
-          && item.password === user.password)
-      if (result && result.length > 0) {
-        // await this.$store.dispatch("manager/getPosts")
-        await localStorage.setItem("loginUser", JSON.stringify(result[0]))
+      const users = await this.$store.dispatch("manager/getUsers")
+      console.log("ddd", this.email)
+      const loginUser = users.filter(item =>
+        item.email === this.email
+        && item.password === this.password)
+      if(loginUser && loginUser.length > 0) {
+        localStorage.setItem("loginUser", JSON.stringify(loginUser[0]))
+        this.$router.push("/trang-chu")
         this.isLoading = false
-        // this.$router.push("/trang-chu")
       }
       else {
         this.passWrong = true
@@ -143,7 +136,6 @@ export default {
         alert("Sai tên đăng nhập hoặc mật khẩu !!!")
         this.isLoading = false
       }
-      this.isLoading = false
     }
   }
 }
