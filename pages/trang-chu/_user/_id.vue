@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import CardItem from '../../components/card-item.vue'
-import BaseLoading from '../../components/base-loading.vue'
+import CardItem from '../../../components/card-item.vue'
+import BaseLoading from '../../../components/base-loading.vue'
 export default {
   data() {
     return {
@@ -42,37 +42,9 @@ export default {
   },
   methods: {
     async getData() {
-      await this.$store.dispatch("manager/getCommnents")
-      this.comments = JSON.parse(localStorage.getItem("comments"))
-      if (JSON.parse(localStorage.getItem("localComments")) !== null) {
-        this.comments = this.comments.concat(JSON.parse(localStorage.getItem("localComments")))
-      }
-      this.posts = JSON.parse(localStorage.getItem("allData"))
-      this.postItem = this.posts.filter((x) => x.id == this.$route.params.id)[0] || posts[0]
-
-      for (let j = 0; j < this.comments.length; j++) {
-        if (this.comments[j].postId === this.postItem.id) {
-          const bodyComment = this.comments[j].body
-          const name = this.comments[j].name
-          const item = {
-            bodycomment: bodyComment,
-            name: name
-          }
-          if (this.commentsPosts === []) {
-            this.commentsPost = [item]
-          }
-          else {
-            this.commentsPost.push(item)
-          }
-        }
-      }
-      this.postItem = {
-        id: this.postItem.id,
-        title: this.postItem.title,
-        body: this.postItem.body,
-        author: this.postItem.author,
-        comments: this.commentsPost
-      }
+      // await this.$store.dispatch("manager/getComments")
+      const postId = this.$route.params.id
+      this.postItem =  await this.$store.dispatch("manager/getComments", postId)
     },
     addComments() {
       this.dialog = true

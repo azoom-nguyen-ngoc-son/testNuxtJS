@@ -125,9 +125,10 @@ export default {
       const loginUser = users.filter(item =>
         item.email === this.email
         && item.password === this.password)
+      console.log("login", loginUser)
       if(loginUser && loginUser.length > 0) {
         localStorage.setItem("loginUser", JSON.stringify(loginUser[0]))
-        this.$router.push("/trang-chu")
+        this.$router.push(`/trang-chu/${loginUser.name}`)
         this.isLoading = false
       }
       else {

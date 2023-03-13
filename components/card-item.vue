@@ -5,8 +5,12 @@
       max-width="700">
       <v-list-item-avatar 
         color="mr-2 ml-4 grey darken-3">
-        <v-img class="elevation-6" alt=""
-          src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"></v-img>
+        <v-img 
+          class="elevation-6" 
+          alt=""
+          src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+        >
+      </v-img>
       </v-list-item-avatar>
       <strong>
         {{ postItem.author }}
@@ -19,7 +23,12 @@
       </v-card-subtitle>
       <v-card-text>
         <v-row align="center" class="mx-0">
-          <v-img height="300" width="500" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
+          <v-img 
+            height="300" 
+            width="500" 
+            src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+          >
+          </v-img>
         </v-row>
       </v-card-text>
       <v-card-actions>
@@ -94,67 +103,65 @@
 </template>
 
 <script>
-    export default {
-
-				data(){
-					return {
-						dialog: false,
-						contentComment: '',
-					}
-				},
-        name:"CardItem",
-				props: {
-					postItem: {
-						type: Object,
-					},
-					comments: {
-						type: Array
-					}
-				},
-				methods: {
-					addComments() {
-      this.dialog = true
-      this.contentComment = ''
-    },
-    saveComments() {
-      const user = JSON.parse(localStorage.getItem("loginUser"))
-      const comment = {
-        postId: this.postItem.id,
-        id: this.comments.length + 1,
-        name: user.name,
-        email: user.email,
-        body: this.contentComment
-      }
-      const item = {
-        name: user.name,
-        bodycomment: this.contentComment
-      }
-
-      if (!this.postItem.comments && this.contentComment !== "") {
-        this.isLoading = true
-        setTimeout(() => {
+  export default {
+	  data(){
+			return {
+				dialog: false,
+				contentComment: '',
+			}
+		},
+		name:"CardItem",
+		props: {
+			postItem: {
+			  type: Object,
+			},
+			comments: {
+				type: Array
+			}
+		},
+		methods: {
+			addComments() {
+        this.dialog = true
+        this.contentComment = ''
+      },
+      saveComments() {
+        const user = JSON.parse(localStorage.getItem("loginUser"))
+        const comment = {
+          postId: this.postItem.id,
+          id: this.comments.length + 1,
+          name: user.name,
+          email: user.email,
+          body: this.contentComment
+        }
+        const item = {
+          name: user.name,
+          bodycomment: this.contentComment
+        }
+        if (!this.postItem.comments && this.contentComment !== "") {
+              this.isLoading = true
+              setTimeout(() => {
           this.postItem.comments = [item]
           this.isLoading = false
         }, 200);
-      }
-      if (this.postItem.comments && this.contentComment !== "") {
-        this.isLoading = true
-        setTimeout(() => {
-          this.postItem.comments.push(item)
-          this.isLoading = false
-        }, 200);
-      }
-      if (!JSON.parse(localStorage.getItem("localComments")) && this.contentComment !== "") {
-        localStorage.setItem("localComments", JSON.stringify([comment]))
-      }
-      if (JSON.parse(localStorage.getItem("localComments")) && this.contentComment !== "") {
-        let a = JSON.parse(localStorage.getItem("localComments"))
-        a.push(comment)
-        localStorage.setItem("localComments", JSON.stringify(a))
-      }
-      this.dialog = false
-    }
-				}
+        }
+        if (this.postItem.comments && this.contentComment !== "") {
+          this.isLoading = true
+          setTimeout(() => {
+            this.postItem.comments.push(item)
+            this.isLoading = false
+          }, 200);
+        }
+        if (!JSON.parse(localStorage.getItem("localComments")) && this.contentComment !== "") {
+          localStorage.setItem("localComments", JSON.stringify([comment]))
+        }
+        if (JSON.parse(localStorage.getItem("localComments")) && this.contentComment !== "") {
+          let a = JSON.parse(localStorage.getItem("localComments"))
+          a.push(comment)
+          localStorage.setItem("localComments", JSON.stringify(a))
+        }
+        this.dialog = false
+        }
+			}
     }
 </script>
 

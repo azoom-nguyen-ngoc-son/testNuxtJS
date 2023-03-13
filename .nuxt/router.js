@@ -7,8 +7,8 @@ import scrollBehavior from './router.scrollBehavior.js'
 const _2ac80a5d = () => interopDefault(import('../pages/inspire.vue' /* webpackChunkName: "pages/inspire" */))
 const _14825baf = () => interopDefault(import('../pages/login/index.vue' /* webpackChunkName: "pages/login/index" */))
 const _764ed49a = () => interopDefault(import('../pages/register/index.vue' /* webpackChunkName: "pages/register/index" */))
-const _220db545 = () => interopDefault(import('../pages/trang-chu/index.vue' /* webpackChunkName: "pages/trang-chu/index" */))
-const _5cbb7626 = () => interopDefault(import('../pages/trang-chu/_id.vue' /* webpackChunkName: "pages/trang-chu/_id" */))
+const _2e47fc40 = () => interopDefault(import('../pages/trang-chu/_user/index.vue' /* webpackChunkName: "pages/trang-chu/_user/index" */))
+const _0540fc48 = () => interopDefault(import('../pages/trang-chu/_user/_id.vue' /* webpackChunkName: "pages/trang-chu/_user/_id" */))
 const _14b08315 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
@@ -35,13 +35,13 @@ export const routerOptions = {
     component: _764ed49a,
     name: "register"
   }, {
-    path: "/trang-chu",
-    component: _220db545,
-    name: "trang-chu"
+    path: "/trang-chu/:user",
+    component: _2e47fc40,
+    name: "trang-chu-user"
   }, {
-    path: "/trang-chu/:id?",
-    component: _5cbb7626,
-    name: "trang-chu-id"
+    path: "/trang-chu/:user?/:id?",
+    component: _0540fc48,
+    name: "trang-chu-user-id"
   }, {
     path: "/",
     component: _14b08315,

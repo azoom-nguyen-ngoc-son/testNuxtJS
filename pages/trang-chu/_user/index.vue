@@ -128,7 +128,7 @@
 
 <script>
 import { commit, dispatch, sync } from 'vuex-pathify';
-import BaseLoading from '../../components/base-loading.vue'
+import BaseLoading from '../../../components/base-loading.vue'
 export default {
   data() {
     return {
@@ -244,7 +244,6 @@ export default {
       for(let i = 0; i < 5; i++) {
           this.posts.push(this.dataPosts[i])
       }
-      console.log("this.post", this.posts)
       localStorage.setItem("dataPosts", JSON.stringify(this.dataPosts))
       this.lengthPagination = Math.ceil(this.dataPosts.length / 5)
       this.isLoading = false
